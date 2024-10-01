@@ -35,8 +35,8 @@
         // )
 
         //component
-        function Header(props) {
-            return <h1>Belajar React {props.title}</h1>;
+        function Header({title}) {
+            return <h1>Belajar React {title ? title : 'Asyik Banget'}</h1>;
         }
 
         function Footer() {
@@ -44,18 +44,60 @@
         }
 
         function HomePage() {
-            const mahasiswa = ['John','Doe','Jane'];
+            const mahasiswa = [
+                {
+                    npm:'001',
+                    nama:'John',
+                    hobi:['Makan','Main Game']
+                },
+                {
+                    npm:'002',
+                    nama:'Doe',
+                    hobi:['Baca buku','Ngoding']
+                },
+                {
+                    npm:'003',
+                    nama:'Jane',
+                    hobi:['Belanja','Masak']
+                }
+            ];
+
+            //state
+            const[like,setLike] = React.useState(0);
+            function handleClick(){
+                setLike(like + 1);
+            }
             return<>
-                <Header title="Asyik Banget"/>
+                <Header />
                 <Header title="Mudah"/>
                 <p> Belajar React menyenangkan</p>
-                <ul>
-                    {
-                        mahasiswa.map((mhs) => (
-                            <li key={mhs}>{mhs}</li>
-                        ))
-                    }   
-                </ul>
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                        <th>NPM</th>
+                        <th>Nama</th>
+                        <th>Hobi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            mahasiswa.map((mhs) => (
+                                <tr key={mhs.npm}>
+                                    <td>{mhs.npm}</td>
+                                    <td>{mhs.nama}</td>
+                                    <td>
+                                        <ul>
+                                            {mhs.hobi.map((hobi)=> (
+                                                <li key={hobi}>{hobi}</li>
+                                            ))}
+                                        </ul>
+                                    </td>
+                                </tr>
+                            ))
+                        }   
+                    </tbody>
+                </table>
+                <button onClick={handleClick}>Like {like}</button>
                 <Footer />
             </>;
         }
